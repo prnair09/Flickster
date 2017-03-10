@@ -21,7 +21,7 @@ public class Movie {
     }
 
     public String getOverView() {
-        return overView.substring(0,100);
+        return overView.substring(0,overView.length()>150?150:overView.length());
     }
 
     public String getBackdropPath() {

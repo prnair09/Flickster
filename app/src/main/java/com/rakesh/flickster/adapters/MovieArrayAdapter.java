@@ -26,6 +26,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         super(ctx,android.R.layout.simple_list_item_1,movies);
     }
 
+    private static final int WIDTH_POSTER = 342;
+    private static final int WIDTH_BACKDROP = 780;
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -45,23 +48,28 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder = (MovieViewHolder)convertView.getTag();
         }
 
+        String imageUrl = movie.getPosterPath();
+        int imageWidth = WIDTH_POSTER;
         viewHolder.ivMovieImage.setImageResource(0);
 
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverView());
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).
-                into(viewHolder.ivMovieImage);
 
         int orientation = getContext().getResources().getConfiguration().orientation;
 
         if(orientation == Configuration.ORIENTATION_LANDSCAPE){
             viewHolder.ivMovieImage.setImageResource(0);
-            Picasso.with(getContext()).load(movie.getBackdropPath()).
-                    into(viewHolder.ivMovieImage);
+            imageUrl = movie.getBackdropPath();
+            imageWidth = WIDTH_BACKDROP;
+
         }
 
-
+        Picasso.with(getContext()).load(imageUrl)
+                .resize(imageWidth,0)
+                .placeholder(R.drawable.user_w320placeholder)
+                .error(R.drawable.error)
+                .into(viewHolder.ivMovieImage);
 
         return convertView;
     }
