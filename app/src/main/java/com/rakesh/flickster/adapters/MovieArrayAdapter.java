@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rakesh.flickster.Helper.SizeHelper;
 import com.rakesh.flickster.R;
 import com.rakesh.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
@@ -70,6 +71,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             String imageUrl = movie.getPosterPath();
             int imageWidth = WIDTH_POSTER;
 
+
             MovieViewHolder viewHolder;
 
             if (movie.getVoteAverage() > 5.0 && !itemMoviePopularSet.contains(position)) {
@@ -127,13 +129,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
                     popViewHolder.ivMovieImage.setImageResource(0);
                     imageUrl = movie.getBackdropPath();
-                    imageWidth = WIDTH_BACKDROP;
+                    //imageWidth = WIDTH_BACKDROP;
+                    imageWidth = SizeHelper.getScreenWidth();
 
 
                     if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         popViewHolder.ivMovieImage.setImageResource(0);
                         imageUrl = movie.getBackdropPath();
-                        imageWidth = WIDTH_BACKDROP_LANDSCAPE;
                     }
 
                     Picasso.with(getContext()).load(imageUrl)
@@ -152,6 +154,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         }
         return convertView;
     }
+
 
     private class MovieViewHolder{
         ImageView ivMovieImage;

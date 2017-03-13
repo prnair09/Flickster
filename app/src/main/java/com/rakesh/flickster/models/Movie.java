@@ -4,13 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by rparuthi on 3/7/2017.
  */
 
-public class Movie {
+public class Movie implements Serializable {
 
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s",posterPath);
@@ -21,7 +22,7 @@ public class Movie {
     }
 
     public String getOverView() {
-        return overView.substring(0,overView.length()>150?150:overView.length());
+        return overView;
     }
 
     public String getBackdropPath() {
@@ -32,11 +33,17 @@ public class Movie {
         return voteAverage;
     }
 
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
     String posterPath;
     String originalTitle;
     String overView;
     String backdropPath;
     double voteAverage;
+    String releaseDate;
 
     public Movie(JSONObject jsonObject) throws JSONException{
         this.posterPath = jsonObject.getString("poster_path");
@@ -44,6 +51,7 @@ public class Movie {
         this.overView = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.voteAverage = jsonObject.getDouble("vote_average");
+        this.releaseDate = jsonObject.getString("release_date");
     }
 
     public static ArrayList<Movie> fromJsonArray(JSONArray array){
